@@ -1,0 +1,7 @@
+syntax='proto3';
+
+message{
+
+    int32 firstname=2;
+    string lastname=3;
+}
