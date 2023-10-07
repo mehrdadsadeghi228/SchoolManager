@@ -18,6 +18,7 @@ const productSchemaRedis = new Schema(Person, {
   });
 
 module.exports={
-    
-    productSchemaRedis
-}
+
+  productSchemaRedis
+
+  }
