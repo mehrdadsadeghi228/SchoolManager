@@ -1,8 +1,10 @@
 const mongoose=require("mongoose");
-const { StudentFinallyExamModelOnTeacher, CourseMinExamModelOnTeacher, courseModelOnTeacher } = require("./coures.model.Techer");
+const { StudentFinallyExamModelOnTeacher, CourseMinExamModelOnTeacher, courseModelOnTeacher } = require("./course.model.Teacher");
 
 const StudentOnTeacherSchema =new  mongoose.Schema({
-    course:{type:[courseModelOnTeacher] ,require:true,ref:"courseModelOnTeacher"},
+    name:{type:String,require:true},
+    lastName:{type:String,require:true},
+    course:{type:[courseModelOnTeacher] ,ref:"courseModelOnTeacher"},
     MinExam:{type:[CourseMinExamModelOnTeacher] ,ref:'CourseMinExamModelOnTeacher'},
     finalExam:{type:[StudentFinallyExamModelOnTeacher] ,ref:'StudentFinallyExamModelOnTeacher'},
     mobileParent:{type:Number,require:true},

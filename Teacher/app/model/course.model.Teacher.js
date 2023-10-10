@@ -16,17 +16,12 @@ const courseSchema = new mongoose.Schema({
 });
 
 const finallyExamSchema = new mongoose.Schema({
-    name:{
-        type:String ,
+    courseId:{
+        type:mongoose.Types.ObjectId ,
         require:true,
         unique:true ,
     },
-    measure:{
-        type:Number,
-        default:1,
-        min: 1,
-        max: 4
-    },
+
     finallyScore:{
         type:Number,
         min:0,
@@ -50,7 +45,7 @@ const finallyExamSchema = new mongoose.Schema({
 
 const MinExamSchema =new  mongoose.Schema({
     idCourse:{
-        type:String ,
+        type:mongoose.Types.ObjectId ,
         require:true,
         unique:true,
     },
