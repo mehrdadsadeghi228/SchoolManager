@@ -1,5 +1,5 @@
-const BaseController=require('./base.Controller');
-const { StudentFinallyExamModelOnTeacher, CourseMinExamModelOnTeacher, courseModelOnTeacher } = require("../model/course.model.Teacher");
+const BaseController=require('../base.Controller');
+const { StudentFinallyExamModelOnTeacher, CourseMinExamModelOnTeacher, courseModelOnTeacher } = require("../../model/course.model.Teacher");
 const createHttpError = require("http-errors");
 const { StatusCodes: HttpStatus } = require("http-status-codes");
 

@@ -30,7 +30,7 @@ class TeacherControllerONTeacherClass extends BaseController {
         try {
             const { name } = req.params;
             if (typeof name !== String) createHttpError.NotAcceptable(' name must have value and be a string ');
-            const requestName = this.checkSTeacherExit(name)
+            const requestName = this.checksTeacherExit(name)
             if (!requestName.name) {
                 return res.status(HttpStatus.NOT_ACCEPTABLE).json({
                     message: " the Teacher with this name dose not exist !."
@@ -132,7 +132,7 @@ class TeacherControllerONTeacherClass extends BaseController {
             next(error)
         }
     }
-    async checkSTeacherExit(name) {
+    async checksTeacherExit(name) {
         try {
             const answer = await TeacherModelOnTeacher.findOne({ name: name });
 
@@ -142,6 +142,58 @@ class TeacherControllerONTeacherClass extends BaseController {
             next(error)
         }
 
+    }
+
+    async addMinTermForStudents(req,res,next){
+            try {
+                const { name , minTermId,nameOfStudents} = req.body;
+                const teacherId=req.teacher.id;
+                const exist = await TeacherModelOnTeacher.findById(teacherId);
+                const existStudents = await StudentModelOnTeacher.findOne({name:nameOfStudents});
+                if (!exist && !existStudents) {
+                    return res.status(HttpStatus.NOT_ACCEPTABLE).json({
+                        message: " this name exist before !. "
+                        
+                    });
+                }
+                const t = existStudents.course;
+                    for (let index = 0; index < t.length; index++) {
+                       if(minTermId === t[index])
+                      {
+                        return res.status(HttpStatus.NOT_ACCEPTABLE).json({
+                            message: " this course exist before for students !. "
+                            
+                        });
+                      }  
+                    }
+                    const request = await StudentModelOnTeacher.findOneAndUpdate({name:nameOfStudents},{
+                        '$push':{ MinExam : minTermId }
+                    });
+                const t1 = exist.course;
+                    for (let index = 0; index < t1.length; index++) {
+                       if(courseId === t1[index])
+                      {
+                        return res.status(HttpStatus.NOT_ACCEPTABLE).json({
+                            message: " this course exist before for teacher !. "
+                            
+                        });
+                      }  
+                    }
+    
+                    const requestAdmin = await TeacherModelOnTeacher.findByIdAndUpdate({_id:teacherId},{
+                        '$push':{ StudentCourse : courseId }
+                    });
+                    return res.status().json({
+                        message:"add Course For Student And Teacher is successfully",
+                        student:request,
+                        teacher:requestAdmin
+                    })
+    
+            } catch (error) {
+                next(error)
+          
+            }
+        
     }
 
 

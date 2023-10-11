@@ -70,33 +70,37 @@ class TeacherAuthManager extends Controller {
     }
 
     async getVerifyEmailCode(req, res, next) {
-        const { name } = req.teacher;
-        const { codeEmails } = req.body;
-        const resultSearching = this.checkSTeacherExit(name)
-        if (!resultSearching) {
-            return res.status(HttpStatus.BAD_REQUEST).json({
-                statusCodes: HttpStatus.BAD_REQUEST,
-                where: location,
-                message: "teacher name is not exist "
-            });
-        }
+     try {
+            const { name } = req.teacher;
+            const { codeEmails } = req.body;
+            const resultSearching = this.checkSTeacherExit(name)
+            if (!resultSearching) {
+                return res.status(HttpStatus.BAD_REQUEST).json({
+                    statusCodes: HttpStatus.BAD_REQUEST,
+                    where: location,
+                    message: "teacher name is not exist "
+                });
+            }
 
-        if (!codeEmails) { createHttpError.NotImplemented('code receive can Not br empty '); }
-        if (resultSearching.otpEmail.code == codeEmails) {
-            const resultCodeEmail = await TeacherModelOnTeacher.findByIdAndUpdate({ _id: resultSearching._id }, {
-                isEmail: true
-            });
-            return res.status(HttpStatus.NOT_ACCEPTABLE).json({
-                statusCodes: HttpStatus.NOT_ACCEPTABLE,
+            if (!codeEmails) { createHttpError.NotImplemented('code receive can Not br empty '); }
+            if (resultSearching.otpEmail.code == codeEmails) {
+                const resultCodeEmail = await TeacherModelOnTeacher.findByIdAndUpdate({ _id: resultSearching._id }, {
+                    isEmail: true
+                });
+                return res.status(HttpStatus.NOT_ACCEPTABLE).json({
+                    statusCodes: HttpStatus.NOT_ACCEPTABLE,
+                    where: location,
+                    message: " Email is Verify thanks " + resultCodeEmail._id
+                });
+            }
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+                statusCodes: HttpStatus.INTERNAL_SERVER_ERROR,
                 where: location,
-                message: " Email is Verify thanks " + resultCodeEmail._id
+                message: " there was a problem the code is not right or server in issus"
             });
-        }
-        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-            statusCodes: HttpStatus.INTERNAL_SERVER_ERROR,
-            where: location,
-            message: " there was a problem the code is not right or server in issus"
-        });
+     } catch (error) {
+             next(error)
+     }
     }
     async DeleteAdmin(req, res, next) {
         try {

@@ -21,7 +21,6 @@ const finallyExamSchema = new mongoose.Schema({
         require:true,
         unique:true ,
     },
-
     finallyScore:{
         type:Number,
         min:0,
@@ -43,7 +42,7 @@ const finallyExamSchema = new mongoose.Schema({
     }
 });
 
-const MinExamSchema =new  mongoose.Schema({
+const MinExamSchema =new mongoose.Schema({
     idCourse:{
         type:mongoose.Types.ObjectId ,
         require:true,
@@ -70,3 +69,4 @@ module.exports={
     CourseMinExamModelOnTeacher:mongoose.model('CourseMinExamModelOnTeacher',MinExamSchema),
     StudentFinallyExamModelOnTeacher:mongoose.model('StudentFinallyExamModelOnTeacher',finallyExamSchema)
 }
+
