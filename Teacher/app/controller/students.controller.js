@@ -46,6 +46,7 @@ class StudentsControllerONTeacherClass extends BaseController {
             next(error)
         }
     }
+
     async createStudent(req, res, next) {
         try {
             const { name, lastName, course,mobileParent,mobile,email} = req.body;
@@ -90,6 +91,9 @@ class StudentsControllerONTeacherClass extends BaseController {
         }
 
     }
+
+
+
 }
 
 module.exports = {

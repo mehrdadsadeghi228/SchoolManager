@@ -1,18 +1,20 @@
 const mongoose= require("mongoose");
-const { courseModelOnTeacher } = require("./coures.model.Techer");
-const { StudentModelOnTeacher } = require("./student.model.Teacher");
 
-const TeacherSchema =new  mongoose.Schema({
+const TeacherSchema =new mongoose.Schema({
+    name:{type:String,require:true,unique:true},
+    lastName:{type:String,require:true},
     StudentCourse:{type:[mongoose.Types.ObjectId],ref:"courseModelOnTeacher"},
     StudentNameOfCourse:{type:[mongoose.Types.ObjectId],ref:"StudentModelOnTeacher"},
-    mobileParent:{type:Number,require:true},
     mobile:{type:String,require:true},
     email:{type:String},
+    Active:{type:Boolean,default:false},
     isEmail:{type:Boolean,default:false},
-    otpEmail:{
-        type:Number,
-        expire:1000
+    hashPass:{type:String,default:false},
+    otpEmail:{type:Object ,default:{
+        code:11111,
+        expireIn:0
     }
+} 
 }); 
 
 
