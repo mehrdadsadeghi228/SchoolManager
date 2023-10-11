@@ -5,6 +5,7 @@ const { StatusCodes: HttpStatus } = require("http-status-codes");
 const { StudentModelOnTeacher } = require('../model/student.model.Teacher');
 const studentModelTeacher = require('../model/student.model.Teacher');
 const initRedis = require('../utils/initRedis');
+require('dotenv').config();
 
 class StudentsControllerONTeacherClass extends BaseController {
     async getAllStudentsName(req, res, next) {
@@ -58,8 +59,8 @@ class StudentsControllerONTeacherClass extends BaseController {
             
             const CreateCourse = await StudentModelOnTeacher.create( { name, lastName, course,mobileParent,mobile,email});
 
-            const tokenAccess =  CreatedJWT({id:CreateCourse._id,name:CreateCourse.name},KEYTOKEN);
-            const RefreshToken = CreatedRefreshJWT({id:CreateCourse._id,name:CreateCourse.name},KEYREFRESH)
+            const tokenAccess =  CreatedJWT({id:CreateCourse._id,name:CreateCourse.name},process.env.KEYTOKEN);
+            const RefreshToken = CreatedRefreshJWT({id:CreateCourse._id,name:CreateCourse.name},process.env.KEYREFRESH)
             const redisUser_mobile= `${CreateCourse.mobile}`;
             const redisUser_id= `${CreateCourse._id}`;
 
